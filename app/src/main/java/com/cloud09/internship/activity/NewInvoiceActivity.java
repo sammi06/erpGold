@@ -59,7 +59,7 @@ public class NewInvoiceActivity extends AppCompatActivity {
         //----------------------------------------
         Bundle updateBundle = getIntent().getExtras();
         if (updateBundle != null){
-            //get Data From Db and Server
+            //get Data From INTENT
         }
 
 
