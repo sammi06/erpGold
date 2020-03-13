@@ -1,0 +1,184 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite"
+    android:paddingBottom="10dp">
+
+    <!--cuSkills= create update objective-->
+    <TextView
+        android:id="@+id/tv_cuAdd_Product_heading0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorbg"
+        android:padding="10dp"
+        android:text="@string/new_product_or_service"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/tied_cuAdd_Product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_cuAdd_Product_heading0"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:hint="@string/name_required"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_Product_heading0" />
+
+    <TextView
+        android:id="@+id/tv_cu_heading2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/unit_price_rate"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_name" />
+
+    <EditText
+        android:id="@+id/tied_cuAdd_Product_rate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/tv_cu_heading2"
+        android:inputType="number"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_cu_heading2"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_name" />
+
+    <TextView
+        android:id="@+id/tv_cu_heading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="Current Cost"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_rate" />
+
+    <EditText
+        android:id="@+id/tied_cuAdd_Product_CurrentCost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/tv_cu_heading2"
+        android:inputType="number"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_cu_heading1"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_rate" />
+
+
+    <TextView
+        android:id="@+id/tv_cu_heading3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="Discounted Cost"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_CurrentCost" />
+
+    <EditText
+        android:id="@+id/tied_cuAdd_Product_DiscountedPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/tv_cu_heading2"
+        android:inputType="number"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_cu_heading3"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_CurrentCost" />
+
+    <TextView
+        android:id="@+id/tv_cu_heading4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/categories_income_as"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cu_heading3" />
+
+
+    <Spinner
+        android:id="@+id/sp_cu_categoryincome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        android:textAlignment="viewStart"
+        android:gravity="start"
+        android:entries="@array/product_categories"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cu_heading4" />
+
+    <EditText
+        android:id="@+id/tied_cuAdd_Product_Description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:inputType="text"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sp_cu_categoryincome" />
+
+
+    <TextView
+        android:id="@+id/btn_cuD_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/cancle"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:background="@color/colorwhite"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_cuD_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:background="@color/colorwhite"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_Product_Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

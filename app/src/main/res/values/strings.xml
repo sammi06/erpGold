@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Create Invoice</string>
+    <string name="save">Save</string>
+    <string name="customer_required">Customer (required)</string>
+    <string name="enter_or_we_ll_assign">Enter # or we\'ll assign</string>
+    <string name="inv">Inv. #</string>
+    <string name="terms">Terms</string>
+    <string name="no_terms_set">(No Terms Set)</string>
+    <string name="_3_5_20">3/5/20</string>
+    <string name="_3_3_20">3/3/20</string>
+    <string name="due_date">Due Date</string>
+    <string name="date">Date</string>
+    <string name="add_product_or_service_required">Add product or service (required)</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="prs0_00">PRs0.00</string>
+    <string name="discount">Discount</string>
+    <string name="_0_00">0.00</string>
+    <string name="balance_due">Balance due</string>
+    <string name="total">Total</string>
+    <string name="description">Description</string>
+    <string name="top_products_and_services">Top Products and Services</string>
+    <string name="new_product_or_service">New product or service</string>
+    <string name="name_required">Name (required)</string>
+    <string name="categories_income_as">Categories Income as</string>
+    <string name="unit_price_rate">Unit price/rate</string>
+    <string name="cancle">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="quantity">1</string>
+</resources>

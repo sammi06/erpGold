@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite"
+    android:focusableInTouchMode="true"
+    android:padding="10dp"
+    android:paddingBottom="15dp">
+
+    <!--cuSkills= create update objective-->
+    <TextView
+        android:id="@+id/tv_cuAdd_DetailsProductUpdate_heading0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorbg"
+        android:padding="10dp"
+        android:text="Saved Product Name"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pdu_dialog_qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Quantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cuAdd_DetailsProductUpdate_heading0" />
+
+    <EditText
+        android:id="@+id/edt_pdu_dialog_qty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:text="@string/quantity"
+        android:gravity="end"
+        android:paddingStart="3dp"
+        android:inputType="number"
+        android:layout_marginTop="3dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_pdu_dialog_qty"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cuAdd_DetailsProductUpdate_heading0" />
+
+    <TextView
+        android:id="@+id/tv_pdu_dialog_unitprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Unit Price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pdu_dialog_qty" />
+
+    <EditText
+        android:id="@+id/edt_pdu_dialog_unitprice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:padding="5dp"
+        android:paddingStart="3dp"
+        android:gravity="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_pdu_dialog_unitprice"
+        app:layout_constraintTop_toBottomOf="@+id/edt_pdu_dialog_qty" />
+
+    <TextView
+        android:id="@+id/tv_pdu_dialog_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+
+        android:text="Amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pdu_dialog_unitprice" />
+
+
+    <TextView
+        android:id="@+id/edt_pdu_dialog_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="17dp"
+        android:padding="0dp"
+        android:gravity="end"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_pdu_dialog_amount"
+        app:layout_constraintTop_toBottomOf="@+id/edt_pdu_dialog_unitprice" />
+
+    <TextView
+        android:id="@+id/tv_pdu_dialog_textrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
+        android:padding="6dp"
+        android:text="Tax Rate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pdu_dialog_amount" />
+
+    <EditText
+        android:id="@+id/edt_pdu_dialog_textrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:hint="Add Tax Rate"
+        android:padding="8dp"
+        android:inputType="number"
+        android:textColor="@color/colorblack"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pdu_dialog_textrate" />
+
+    <EditText
+        android:id="@+id/edt_pdu_dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:inputType="text|textMultiLine"
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_pdu_dialog_textrate" />
+
+
+    <TextView
+        android:id="@+id/btn_cuD_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorwhite"
+        android:text="@string/cancle"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_pdu_dialog_description" />
+
+
+    <TextView
+        android:id="@+id/btn_cuD_Remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorwhite"
+        android:text="@string/remove"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_pdu_dialog_description" />
+
+
+    <TextView
+        android:id="@+id/btn_cuD_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorwhite"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_pdu_dialog_description" />
+</androidx.constraintlayout.widget.ConstraintLayout>

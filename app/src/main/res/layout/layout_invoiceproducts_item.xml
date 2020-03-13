@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_IP_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="PS_Name"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_IP_Qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/quantity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_IP_Name" />
+
+        <TextView
+            android:id="@+id/tv_invoice_dumi0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="X"
+            app:layout_constraintStart_toEndOf="@id/tv_IP_Qty"
+            app:layout_constraintTop_toBottomOf="@id/tv_IP_Name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/tv_IP_Rate"
+            android:text="@string/unit_price_rate"
+            app:layout_constraintStart_toEndOf="@id/tv_invoice_dumi0"
+            app:layout_constraintTop_toBottomOf="@id/tv_IP_Name" />
+
+
+        <TextView
+            android:id="@+id/tv_IP_Desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="PS_Desc"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_IP_Qty" />
+
+
+        <TextView
+            android:id="@+id/tv_IP_Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="PRs00.00"
+            android:padding="5dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
