@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.cloud09.internship.R;
 import com.cloud09.internship.activity.adapter.ProductAdapter;
 import com.cloud09.internship.activity.model.Product;
+import com.cloud09.internship.activity.serverApi.ApiConfiguration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -79,7 +80,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
     private void fetchProducts() {
         product_model_class = productsSqlite.getAllProducts();
-        JsonArrayRequest products_stringRequest = new JsonArrayRequest("", new Response.Listener<JSONArray>() {
+        JsonArrayRequest products_stringRequest = new JsonArrayRequest(ApiConfiguration.PRODUCTS_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
