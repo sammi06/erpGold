@@ -24,13 +24,18 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.cloud09.internship.R;
 import com.cloud09.internship.activity.adapter.ProductAdapter;
 import com.cloud09.internship.activity.model.Product;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -74,30 +79,36 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
     private void fetchProducts() {
         product_model_class = productsSqlite.getAllProducts();
-        StringRequest products_stringRequest = new StringRequest(Request.Method.POST, "", new Response.Listener<String>() {
+        JsonArrayRequest products_stringRequest = new JsonArrayRequest("", new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(String response) {
-                //------------------------For Data Saving
-                //get list from jSON
+            public void onResponse(JSONArray response) {
+                try {
+                    JSONArray jObject = new JSONArray(response);
 
 
 
 
-                /////----------------For Data Display
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductActivity.this, LinearLayoutManager.VERTICAL, false);
-                rvProducts.setLayoutManager(linearLayoutManager);
 
-                adapter = new ProductAdapter(ProductActivity.this, product_model_class, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    /////----------------For Data Display
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductActivity.this, LinearLayoutManager.VERTICAL, false);
+                    rvProducts.setLayoutManager(linearLayoutManager);
+
+                    adapter = new ProductAdapter(ProductActivity.this, product_model_class, new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                String name = product_model_class.get(position).getProductName();
 //                Double rate = product_model_class.get(position).getProductRate();
 //                String description = product_model_class.get(position).getProductDesc();
 //
 //                showAddInvoiceProductDialog(name, rate, description);
-                    }
-                });
-                rvProducts.setAdapter(adapter);
+                        }
+                    });
+                    rvProducts.setAdapter(adapter);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -106,8 +117,10 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("", "");
+                return headers;
             }
         };
     }
