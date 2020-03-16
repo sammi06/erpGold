@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorwhite"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/tv_PS_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorbg"
         android:hint="PS_Name"
         android:padding="2dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginStart="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintHorizontal_bias="0.0"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -23,38 +24,23 @@
         android:id="@+id/tv_PS_Item_Code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorbg"
         android:gravity="end"
         android:hint="Item Code"
         android:padding="2dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_PS_Name"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/sp_item_category"
+    <View
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/product_categories"
-        android:gravity="start"
-
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="1.5dp"
+        android:id="@+id/view0"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_PS_Name" />
-
-    <Spinner
-        android:id="@+id/sp_item_Type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/product_categories"
-        android:gravity="start"
-
-        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sp_item_category" />
+        app:layout_constraintTop_toBottomOf="@id/tv_PS_Name"
+        />
 
 
     <TextView
@@ -67,19 +53,21 @@
         android:text="@string/unit_price_rate"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sp_item_Type" />
+        app:layout_constraintTop_toBottomOf="@id/view0" />
 
-    <EditText
+    <TextView
         android:id="@+id/tied_layout_productItem_Product_rate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/tv_layout_product_Item_heading0"
         android:inputType="number"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_layout_product_Item_heading0"
-        app:layout_constraintTop_toBottomOf="@id/sp_item_Type" />
+        app:layout_constraintTop_toBottomOf="@id/view0" />
 
 
     <TextView
@@ -94,13 +82,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tied_layout_productItem_Product_rate" />
 
-    <EditText
+    <TextView
         android:id="@+id/tied_layout_productItem_currentcost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:inputType="number"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="viewEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_layout_product_currentcost_heading1"
         app:layout_constraintTop_toBottomOf="@id/tied_layout_productItem_Product_rate" />
@@ -117,12 +107,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tied_layout_productItem_currentcost" />
 
-    <EditText
+    <TextView
         android:id="@+id/tied_layout_productItem_discountedPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:inputType="number"
+        android:textAlignment="viewEnd"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_layout_product_discountedPrice_heading2"
@@ -134,27 +126,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="PS_Desc"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
         android:layout_marginStart="12dp"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tied_layout_productItem_discountedPrice" />
+        app:layout_constraintTop_toBottomOf="@id/tv_layout_product_discountedPrice_heading2" />
 
-    <TextView
-        android:id="@+id/tv_PS_Rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="PRs00.00"
-        android:padding="5dp"
-        android:visibility="gone"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_PS_Desc" />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="#C7C7C7"
-
+        android:layout_marginStart="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_PS_Desc" />
 </androidx.constraintlayout.widget.ConstraintLayout>

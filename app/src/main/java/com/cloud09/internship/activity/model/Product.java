@@ -9,18 +9,14 @@ public class Product {
     public String CurrentCost;
     public String DiscountedPrice;
     public String ProductDesc;
+    public String PItemCode;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "ProductId=" + ProductId +
-                ", ProductName='" + ProductName + '\'' +
-                ", ProductRate=" + ProductRate +
-                ", ProductCategory='" + ProductCategory + '\'' +
-                ", CurrentCost='" + CurrentCost + '\'' +
-                ", DiscountedPrice='" + DiscountedPrice + '\'' +
-                ", ProductDesc='" + ProductDesc + '\'' +
-                '}';
+    public String getPItemCode() {
+        return PItemCode;
+    }
+
+    public void setPItemCode(String PItemCode) {
+        this.PItemCode = PItemCode;
     }
 
     //Getters
@@ -57,8 +53,19 @@ public class Product {
         ProductDesc = productDesc;
     }
 
+    public String getCurrentCost() {
+        return CurrentCost;
+    }
 
+    public void setCurrentCost(String currentCost) {
+        CurrentCost = currentCost;
+    }
 
+    public String getDiscountedPrice() {
+        return DiscountedPrice;
+    }
 
-
+    public void setDiscountedPrice(String discountedPrice) {
+        DiscountedPrice = discountedPrice;
+    }
 }

@@ -20,12 +20,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.cloud09.internship.R;
 import com.cloud09.internship.activity.adapter.ProductAdapter;
 import com.cloud09.internship.activity.model.Product;
@@ -65,7 +65,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         swipeRefreshLayout = findViewById(R.id.swipeRefresh_ProductActivity);
         swipeRefreshLayout.setOnRefreshListener(this);
         productsSqlite = new products_sqlite(ProductActivity.this);
-        product_model_class = productsSqlite.getAllProducts();
+        //product_model_class = productsSqlite.getAllProducts();
         fetchProducts();
 
         fabAddProducts.setOnClickListener(new View.OnClickListener() {
@@ -79,23 +79,35 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     private void fetchProducts() {
-        product_model_class = productsSqlite.getAllProducts();
+        //product_model_class = productsSqlite.getAllProducts();
         JsonArrayRequest products_stringRequest = new JsonArrayRequest(ApiConfiguration.PRODUCTS_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                Log.i("cvv", String.valueOf(response));
                 try {
-                    JSONArray jObject = new JSONArray(response);
+                    JSONArray jObjectArray = response;
+                    //Category Code for displaying
+                    ArrayList<Product> productsList = new ArrayList<>();
+                    for (int i = 0; i < jObjectArray.length(); i++) {
+                        JSONObject productObject = jObjectArray.getJSONObject(i);
 
+                        Product product= new Product();
+                        product.ProductId = productObject.getInt("ID");
+                        product.ProductName = productObject.getString("ItemName");
+                        product.ProductDesc = productObject.getString("ItemDescription");
+                        product.ProductRate = productObject.getDouble("UnitPrice");
+                        product.CurrentCost = productObject.getString("CurrentCost");
+                        product.DiscountedPrice = productObject.getString("DiscountedPrice");
+                        product.PItemCode = productObject.getString("ItemCode");
 
-
-
-
+                        productsList.add(product);
+                    }
 
                     /////----------------For Data Display
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductActivity.this, LinearLayoutManager.VERTICAL, false);
                     rvProducts.setLayoutManager(linearLayoutManager);
 
-                    adapter = new ProductAdapter(ProductActivity.this, product_model_class, new AdapterView.OnItemClickListener() {
+                    adapter = new ProductAdapter(ProductActivity.this, productsList, new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                String name = product_model_class.get(position).getProductName();
@@ -109,21 +121,31 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    Log.i("cvv", String.valueOf(ex));
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.i("cvv", String.valueOf(error));
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("", "");
+                headers.put("Token", "8c50bf69-e974-4384-9850-215782ff2ad1");
+                headers.put("Username", "abdeveloper00@gmail.com");
                 return headers;
             }
         };
+
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        products_stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(products_stringRequest);
     }
 
 
@@ -332,7 +354,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         fetchProducts();
-        adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
 }
