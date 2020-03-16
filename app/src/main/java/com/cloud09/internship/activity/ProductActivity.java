@@ -111,7 +111,11 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String name = productsList.get(position).getProductName();
                             Double rate = productsList.get(position).getProductRate();
+
                             String description = productsList.get(position).getProductDesc();
+                            if (description.equals("null")) {
+                                description = "";
+                            }
 
                             showAddInvoiceProductDialog(name, rate, description);
                         }
@@ -336,7 +340,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 String ProductSalesTax = edt_salesTax.getText().toString();
 
                 Log.d("cvv",name + ": "+ ProductQuantity+ ": "+  pdesc+ ": "+  ProductUnitPrice+ ": "+  ProductAmount+ ": "+  ProductSalesTax);
-                // productsSqlite.addInvoiceProducts(name, ProductQuantity, pdesc, ProductUnitPrice, ProductAmount, ProductSalesTax);
+                 productsSqlite.addInvoiceProducts(name, ProductQuantity, pdesc, ProductUnitPrice, ProductAmount, ProductSalesTax);
                 alertDialog.dismiss();
 
                 Intent newInvoiceActivity = new Intent(ProductActivity.this, NewInvoiceActivity.class);

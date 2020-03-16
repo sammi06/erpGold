@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -28,7 +29,7 @@ import com.cloud09.internship.activity.model.InvoiceProduct_Class;
 
 import java.util.ArrayList;
 
-public class NewInvoiceActivity extends AppCompatActivity {
+public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     String pname, pdescription;
     String pqty;
     String punitprice;
@@ -40,14 +41,19 @@ public class NewInvoiceActivity extends AppCompatActivity {
 
     private ArrayList<InvoiceProduct_Class> invoiceProductClassArrayList;
     private ProductInvoiceAdapter productInvoiceAdapter;
-    private TextView tvAddProduct;
-    private TextView tvAddCustomers;
     private RecyclerView rvInvoiceProducts;
     private products_sqlite productsSqlite;
+    private AlertDialog alertDialog;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+
+    private TextView tvAddProduct;
+    private TextView tvAddCustomers;
     private TextView tv_productname, tv_productamount;
     private EditText edt_productquantity, edt_productunitprice, edt_producttaxrate, edt_productdescription;
     private TextView tv_ok_btn, tv_cancel_btn, tv_remove_btn;
-    private AlertDialog alertDialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class NewInvoiceActivity extends AppCompatActivity {
 
         tvAddProduct = findViewById(R.id.tv_add_Products);
         rvInvoiceProducts = findViewById(R.id.rv_Invoice_Products);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh_ProductActivity_NewInvoiceActivity);
+        swipeRefreshLayout.setOnRefreshListener(this);
         //----------------------------------------
         Bundle updateBundle = getIntent().getExtras();
         if (updateBundle != null){
@@ -330,5 +339,10 @@ public class NewInvoiceActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

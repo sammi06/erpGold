@@ -26,4 +26,6 @@
     <string name="cancle">Cancel</string>
     <string name="remove">Remove</string>
     <string name="quantity">1</string>
+    <string name="customer_billing_address">Customer Billing Address</string>
+    <string name="customer_shipping_address">Customer Shipping Address</string>
 </resources>

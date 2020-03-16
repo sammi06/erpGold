@@ -13,10 +13,12 @@
         android:layout_height="wrap_content"
         android:hint="PS_Name"
         android:padding="2dp"
+        android:textColor="@color/colorblack"
         android:layout_marginStart="5dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginEnd="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintHorizontal_bias="0.0"
-
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +29,7 @@
         android:gravity="end"
         android:hint="Item Code"
         android:padding="2dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="1.5dp"
         android:id="@+id/view0"
+        android:layout_marginStart="5dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +64,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/tv_layout_product_Item_heading0"
-        android:inputType="number"
         android:textAlignment="viewEnd"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +87,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:inputType="number"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         android:textAlignment="viewEnd"
@@ -121,11 +122,10 @@
         android:id="@+id/tv_PS_Desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="PS_Desc"
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
         android:layout_marginStart="12dp"
-
+        android:textColor="@color/colorblack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_layout_product_discountedPrice_heading2" />
 

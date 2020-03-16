@@ -1,6 +1,7 @@
 package com.cloud09.internship.activity.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     Context context;
     ArrayList<Product> product_ArrayList;
     AdapterView.OnItemClickListener onItemClickListener;
+    double Prate;
+    private String Pname, Pdesc, PItemCode, PCurrentCost, PDiscountedCost;
 
     public ProductAdapter(Context context, ArrayList<Product> product_ArrayList, AdapterView.OnItemClickListener monItemClickListener) {
         this.context = context;
@@ -37,13 +40,58 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     @Override
     public void onBindViewHolder(@NonNull final ProductHolder holder, final int position) {
+        Pname = product_ArrayList.get(position).getProductName();
+        Pdesc = product_ArrayList.get(position).getProductDesc();
+        Prate = product_ArrayList.get(position).getProductRate();
+        String PRATE = String.valueOf(Prate);
+        PItemCode = product_ArrayList.get(position).getPItemCode();
+        PCurrentCost = product_ArrayList.get(position).getCurrentCost();
+        PDiscountedCost = product_ArrayList.get(position).getDiscountedPrice();
 
-        holder.tvPName.setText(product_ArrayList.get(position).getProductName());
-        holder.tvPDesc.setText(product_ArrayList.get(position).getProductDesc());
-        holder.tvPRate.setText("" + product_ArrayList.get(position).getProductRate());
-        holder.tvPItemCode.setText(product_ArrayList.get(position).getPItemCode());
-        holder.tvPCurrentCost.setText(product_ArrayList.get(position).getCurrentCost());
-        holder.tvDiscountedCost.setText(product_ArrayList.get(position).getDiscountedPrice());
+        if (Pname.equals("null")) {
+            Pname = "";
+            holder.tvPName.setText(Pname);
+        } else {
+            holder.tvPName.setText(product_ArrayList.get(position).getProductName());
+        }
+
+        if (Pdesc.equals("null")) {
+            Pdesc = "";
+            holder.tvPDesc.setText(Pdesc);
+            String data=holder.tvPDesc.getText().toString();
+            Log.i("cvv", "inside Down TVPdesc : "+position +" : "+Pdesc);
+            Log.i("cvv", "inside Down TVPdesc DATA : "+position +" : "+data);
+        } else {
+            holder.tvPDesc.setText(product_ArrayList.get(position).getProductDesc());
+        }
+
+        if (PRATE.equals("null")) {
+            PRATE = "";
+            holder.tvPRate.setText(PRATE);
+        } else {
+            holder.tvPRate.setText("" + product_ArrayList.get(position).getProductRate());
+        }
+
+        if (PItemCode.equals("null")) {
+            PItemCode = "";
+            holder.tvPItemCode.setText(PItemCode);
+        } else {
+            holder.tvPItemCode.setText(product_ArrayList.get(position).getPItemCode());
+        }
+
+        if (PCurrentCost.equals("null")) {
+            PCurrentCost = "";
+            holder.tvPCurrentCost.setText(PCurrentCost);
+        } else {
+            holder.tvPCurrentCost.setText(product_ArrayList.get(position).getCurrentCost());
+        }
+
+        if (PDiscountedCost.equals("null")) {
+            PDiscountedCost = "";
+            holder.tvDiscountedCost.setText(PDiscountedCost);
+        } else {
+            holder.tvDiscountedCost.setText(product_ArrayList.get(position).getDiscountedPrice());
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,10 +106,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         return product_ArrayList.size();
     }
 
-    public class ProductHolder extends RecyclerView.ViewHolder {
+    class ProductHolder extends RecyclerView.ViewHolder {
         private TextView tvPName, tvPDesc, tvPRate, tvPItemCode, tvPCurrentCost, tvDiscountedCost;
 
-        public ProductHolder(@NonNull View itemView) {
+        ProductHolder(@NonNull View itemView) {
             super(itemView);
             tvPName = itemView.findViewById(R.id.tv_PS_Name);
             tvPDesc = itemView.findViewById(R.id.tv_PS_Desc);
