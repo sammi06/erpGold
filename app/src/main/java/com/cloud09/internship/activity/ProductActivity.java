@@ -41,6 +41,7 @@ import java.util.Map;
 
 public class ProductActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     ArrayList<Product> product_model_class;
+    ArrayList<Product> productsList;
     ProductAdapter adapter;
     private FloatingActionButton fabAddProducts;
     private products_sqlite productsSqlite;
@@ -53,7 +54,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
     private String intent_unitprice, pdesc, q;
     private String tax = "";
-    private Double qty, uprice, Uprice, value, qup;
+    private Double qty, uprice, Uprice, value, qup, qTY, QTY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         swipeRefreshLayout = findViewById(R.id.swipeRefresh_ProductActivity);
         swipeRefreshLayout.setOnRefreshListener(this);
         productsSqlite = new products_sqlite(ProductActivity.this);
-        //product_model_class = productsSqlite.getAllProducts();
         fetchProducts();
 
         fabAddProducts.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +79,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     private void fetchProducts() {
-        //product_model_class = productsSqlite.getAllProducts();
         JsonArrayRequest products_stringRequest = new JsonArrayRequest(ApiConfiguration.PRODUCTS_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -87,11 +86,11 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 try {
                     JSONArray jObjectArray = response;
                     //Category Code for displaying
-                    ArrayList<Product> productsList = new ArrayList<>();
+                    productsList = new ArrayList<>();
                     for (int i = 0; i < jObjectArray.length(); i++) {
                         JSONObject productObject = jObjectArray.getJSONObject(i);
 
-                        Product product= new Product();
+                        Product product = new Product();
                         product.ProductId = productObject.getInt("ID");
                         product.ProductName = productObject.getString("ItemName");
                         product.ProductDesc = productObject.getString("ItemDescription");
@@ -110,11 +109,11 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                     adapter = new ProductAdapter(ProductActivity.this, productsList, new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String name = product_model_class.get(position).getProductName();
-//                Double rate = product_model_class.get(position).getProductRate();
-//                String description = product_model_class.get(position).getProductDesc();
-//
-//                showAddInvoiceProductDialog(name, rate, description);
+                            String name = productsList.get(position).getProductName();
+                            Double rate = productsList.get(position).getProductRate();
+                            String description = productsList.get(position).getProductDesc();
+
+                            showAddInvoiceProductDialog(name, rate, description);
                         }
                     });
                     rvProducts.setAdapter(adapter);
@@ -216,7 +215,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
         edt_productDescription = dialogView.findViewById(R.id.edt_pd_dialog_description);
         edt_productDescription.setText(desc);
-        pdesc = edt_productDescription.getText().toString();
 
         edt_unitPrice = dialogView.findViewById(R.id.edt_pd_dialog_unitprice);
         intent_unitprice = String.valueOf(UnitPrice);
@@ -224,9 +222,12 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
         edt_quantity = dialogView.findViewById(R.id.edt_pd_dialog_qty);
         tv_productAmount = dialogView.findViewById(R.id.edt_pd_dialog_amount);
-        uprice = Double.parseDouble(intent_unitprice);
 
+        uprice = Double.parseDouble(intent_unitprice);
         q = edt_quantity.getText().toString();
+        qTY = Double.valueOf(q);
+        QTY =(uprice * qTY);
+        tv_productAmount.setText(QTY.toString());
 
         edt_quantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -327,17 +328,19 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pdesc = edt_productDescription.getText().toString();
 
                 String ProductUnitPrice = edt_unitPrice.getText().toString();
                 String ProductQuantity = edt_quantity.getText().toString();
                 String ProductAmount = tv_productAmount.getText().toString();
                 String ProductSalesTax = edt_salesTax.getText().toString();
 
-                productsSqlite.addInvoiceProducts(name, ProductQuantity, pdesc, ProductUnitPrice, ProductAmount, ProductSalesTax);
+                Log.d("cvv",name + ": "+ ProductQuantity+ ": "+  pdesc+ ": "+  ProductUnitPrice+ ": "+  ProductAmount+ ": "+  ProductSalesTax);
+                // productsSqlite.addInvoiceProducts(name, ProductQuantity, pdesc, ProductUnitPrice, ProductAmount, ProductSalesTax);
                 alertDialog.dismiss();
 
-                Intent newinvoiceActivity = new Intent(ProductActivity.this, NewInvoiceActivity.class);
-                startActivity(newinvoiceActivity);
+                Intent newInvoiceActivity = new Intent(ProductActivity.this, NewInvoiceActivity.class);
+                startActivity(newInvoiceActivity);
 
             }
         });
