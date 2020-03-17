@@ -446,13 +446,11 @@
             app:layout_constraintTop_toBottomOf="@id/tv_add_Products" />
 
         <TextView
-            android:id="@+id/tv_add_Prs"
+            android:id="@+id/tv_Invoice_Products_Subtotal_Price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-
             android:layout_marginEnd="15dp"
-
             android:text="@string/prs0_00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_add_Products" />

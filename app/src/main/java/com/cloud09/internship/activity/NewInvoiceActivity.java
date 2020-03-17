@@ -48,12 +48,13 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
 
     private TextView tvAddProduct;
-    private TextView tvAddCustomers;
     private TextView tv_productname, tv_productamount;
     private EditText edt_productquantity, edt_productunitprice, edt_producttaxrate, edt_productdescription;
     private TextView tv_ok_btn, tv_cancel_btn, tv_remove_btn;
 
-
+    //--------------------------------------------------------------------------
+    private EditText edtCustomerName, edtCustomerInvoiceNumber, edtCustomerTerms ;
+    private TextView tvInvoiceProductsSubtotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,37 +66,25 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh_ProductActivity_NewInvoiceActivity);
         swipeRefreshLayout.setOnRefreshListener(this);
+        productsSqlite = new products_sqlite(NewInvoiceActivity.this);
+
         //----------------------------------------
         Bundle updateBundle = getIntent().getExtras();
         if (updateBundle != null){
             //get Data From INTENT
         }
-
-
-        //------------------------------------
-        productsSqlite = new products_sqlite(NewInvoiceActivity.this);
+        //------------------------------------------
         invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
+        GetData();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewInvoiceActivity.this, LinearLayoutManager.VERTICAL, false);
-        rvInvoiceProducts.setLayoutManager(linearLayoutManager);
-        productInvoiceAdapter = new ProductInvoiceAdapter(NewInvoiceActivity.this, invoiceProductClassArrayList, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(NewInvoiceActivity.this, "Clicked : " + position, Toast.LENGTH_SHORT).show();
 
-                invoiceId = invoiceProductClassArrayList.get(position).id;
-                String name = invoiceProductClassArrayList.get(position).ProductInvoiceName;
-                String amount = invoiceProductClassArrayList.get(position).ProductInvoiceAmount;
-                String quantity = invoiceProductClassArrayList.get(position).ProductInvoiceQuantity;
 
-                String rate = invoiceProductClassArrayList.get(position).ProductInvoiceRate;
-                String description = invoiceProductClassArrayList.get(position).ProductInvoiceDesc;
-                String tax = invoiceProductClassArrayList.get(position).ProductInvoiceTax;
 
-                showProductUpdateDialog(invoiceId, name, amount, quantity, rate, tax, description);
-            }
-        });
-        rvInvoiceProducts.setAdapter(productInvoiceAdapter);
+
+
+
+
+
 
         tvAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -343,6 +332,36 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
+        GetData();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    private void GetData() {
+        //------------------------------------
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewInvoiceActivity.this, LinearLayoutManager.VERTICAL, false);
+        rvInvoiceProducts.setLayoutManager(linearLayoutManager);
+        productInvoiceAdapter = new ProductInvoiceAdapter(NewInvoiceActivity.this, invoiceProductClassArrayList, new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(NewInvoiceActivity.this, "Clicked : " + position, Toast.LENGTH_SHORT).show();
+
+                invoiceId = invoiceProductClassArrayList.get(position).id;
+                String name = invoiceProductClassArrayList.get(position).ProductInvoiceName;
+                String amount = invoiceProductClassArrayList.get(position).ProductInvoiceAmount;
+                String quantity = invoiceProductClassArrayList.get(position).ProductInvoiceQuantity;
+
+                String rate = invoiceProductClassArrayList.get(position).ProductInvoiceRate;
+                String description = invoiceProductClassArrayList.get(position).ProductInvoiceDesc;
+                String tax = invoiceProductClassArrayList.get(position).ProductInvoiceTax;
+
+                showProductUpdateDialog(invoiceId, name, amount, quantity, rate, tax, description);
+            }
+        });
+        rvInvoiceProducts.setAdapter(productInvoiceAdapter);
 
     }
+
 }
