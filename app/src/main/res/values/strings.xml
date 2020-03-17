@@ -28,4 +28,6 @@
     <string name="quantity">1</string>
     <string name="customer_billing_address">Customer Billing Address</string>
     <string name="customer_shipping_address">Customer Shipping Address</string>
+    <string name="amount">Amount</string>
+    <string name="use_percentage">Use Percentage</string>
 </resources>

@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ import com.cloud09.internship.activity.model.InvoiceProduct_Class;
 
 import java.util.ArrayList;
 
-public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     String pname, pdescription;
     String pqty;
     String punitprice;
@@ -39,22 +41,26 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
     double taxRate, productAmount, unitPrice, value, qty;
     int invoiceId;
 
+    //------DialogBox-DiscountAmount----------------------------------------------------------------------
+    private String givenDiscountAmount;
+
+
+    //--------------------------
     private ArrayList<InvoiceProduct_Class> invoiceProductClassArrayList;
     private ProductInvoiceAdapter productInvoiceAdapter;
     private RecyclerView rvInvoiceProducts;
     private products_sqlite productsSqlite;
-    private AlertDialog alertDialog;
+    private AlertDialog alertDialog, alertDialogAmount;
     private SwipeRefreshLayout swipeRefreshLayout;
-
-
     private TextView tvAddProduct;
     private TextView tv_productname, tv_productamount;
     private EditText edt_productquantity, edt_productunitprice, edt_producttaxrate, edt_productdescription;
-    private TextView tv_ok_btn, tv_cancel_btn, tv_remove_btn;
 
-    //--------------------------------------------------------------------------
-    private EditText edtCustomerName, edtCustomerInvoiceNumber, edtCustomerTerms ;
-    private TextView tvInvoiceProductsSubtotalPrice;
+
+    //-----InvoiceScreen---------------------------------------------------------------------
+    private EditText edtCustomerName, edtCustomerInvoiceNumber, edtCustomerTerms;
+    private TextView tvInvoiceProductsSubtotalPrice, edtDiscountAmount, edtShippingFee, tvTotalFee, tvBalanceDueAmount;
+    private String SubTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,12 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
         tvAddProduct = findViewById(R.id.tv_add_Products);
         rvInvoiceProducts = findViewById(R.id.rv_Invoice_Products);
+        tvInvoiceProductsSubtotalPrice = findViewById(R.id.tv_Invoice_Products_Subtotal_Price);
+        edtDiscountAmount = findViewById(R.id.edt_Discount_Amount);
+        edtShippingFee = findViewById(R.id.edt_Shipping_Fee);
+        tvTotalFee = findViewById(R.id.tv_Total_Fee);
+        tvBalanceDueAmount = findViewById(R.id.tv_Blanace_Due_Amount);
+
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh_ProductActivity_NewInvoiceActivity);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -70,20 +82,16 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
         //----------------------------------------
         Bundle updateBundle = getIntent().getExtras();
-        if (updateBundle != null){
+        if (updateBundle != null) {
             //get Data From INTENT
         }
         //------------------------------------------
         invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
+        SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
         GetData();
-
-
-
-
-
-
-
-
+        tvInvoiceProductsSubtotalPrice.setText(SubTotal);
+        tvTotalFee.setText(SubTotal);
+        tvBalanceDueAmount.setText(SubTotal);
 
 
         tvAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +99,19 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
             public void onClick(View v) {
                 Intent productIntent = new Intent(NewInvoiceActivity.this, ProductActivity.class);
                 startActivity(productIntent);
+            }
+        });
+
+        edtShippingFee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShippingFeeDialog();
+            }
+        });
+        edtDiscountAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDiscountAmountDialog();
             }
         });
     }
@@ -121,9 +142,9 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         edt_productdescription.setText(description);
 
 
-        tv_ok_btn = dialogView.findViewById(R.id.btn_cuD_save);
-        tv_cancel_btn = dialogView.findViewById(R.id.btn_cuD_cancel);
-        tv_remove_btn = dialogView.findViewById(R.id.btn_cuD_Remove);
+        TextView tv_ok_btn = dialogView.findViewById(R.id.btn_cuD_save);
+        TextView tv_cancel_btn = dialogView.findViewById(R.id.btn_cuD_cancel);
+        TextView tv_remove_btn = dialogView.findViewById(R.id.btn_cuD_Remove);
         alertDialog = dialogBuilder.create();
 
 
@@ -139,7 +160,9 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         productAmount = Double.parseDouble(productamount);
 
         ptaxrate = edt_producttaxrate.getText().toString();
-        taxRate = Double.parseDouble(ptaxrate);
+        if (!ptaxrate.isEmpty()){
+            taxRate = Double.parseDouble(ptaxrate);
+        }
 
 
         edt_producttaxrate.addTextChangedListener(new TextWatcher() {
@@ -274,9 +297,14 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
                 String pa = String.valueOf(productAmount);
                 String tr = String.valueOf(taxRate);
 
-                productsSqlite.updateInvoiceProducts(invoiceId,pname,q,pdescription,up,pa,tr);
-                productInvoiceAdapter.notifyAll();
+                productsSqlite.updateInvoiceProducts(invoiceId, pname, q, pdescription, up, pa, tr);
+                invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
+                SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
+                GetData();
                 alertDialog.dismiss();
+                tvInvoiceProductsSubtotalPrice.setText(SubTotal);
+                tvTotalFee.setText(SubTotal);
+                tvBalanceDueAmount.setText(SubTotal);
             }
         });
         tv_cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -289,13 +317,70 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onClick(View v) {
                 productsSqlite.deleteInvoiceProducts(invoiceId);
+                invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
+                SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
+                GetData();
                 alertDialog.dismiss();
-                productInvoiceAdapter.notifyDataSetChanged();
+                tvInvoiceProductsSubtotalPrice.setText(SubTotal);
+                tvTotalFee.setText(SubTotal);
+                tvBalanceDueAmount.setText(SubTotal);
             }
         });
         alertDialog.show();
     }
 
+
+    public void showShippingFeeDialog() {
+
+    }
+
+    public void showDiscountAmountDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(NewInvoiceActivity.this);
+        @SuppressLint("InflateParams") View dialogView = LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.cust_add_discountamount_dialog, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+
+        final EditText edtAdd_discountAmount = dialogView.findViewById(R.id.tied_cuAdd_discountAmount);
+        CheckBox chkbx_cuAdd_percentag = dialogView.findViewWithTag(R.id.checkbox_cuAdd_percentage);
+
+        final TextView tv_Amount_heading = dialogView.findViewById(R.id.tv_cu_Amount_heading1);
+        TextView tv_amount_ok_btn = dialogView.findViewById(R.id.btn_cuD_save);
+        TextView tv_amount_cancel_btn = dialogView.findViewById(R.id.btn_cuD_cancel);
+
+        alertDialogAmount = dialogBuilder.create();
+
+
+//        chkbx_cuAdd_percentag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    tv_Amount_heading.setText("Percentage");
+//
+//
+//                }
+//            }
+//        });
+
+
+        tv_amount_ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                givenDiscountAmount = edtAdd_discountAmount.getText().toString();
+
+
+                alertDialogAmount.dismiss();
+            }
+        });
+        tv_amount_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialogAmount.cancel();
+            }
+        });
+
+        alertDialogAmount.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

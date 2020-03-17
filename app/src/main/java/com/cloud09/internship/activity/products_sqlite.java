@@ -136,4 +136,21 @@ public class products_sqlite extends SQLiteOpenHelper {
             ex.printStackTrace();
         }
     }
+
+    public int getInvoiceProductsAmount() {
+        String query = "SELECT SUM (p_amount) as total_amount FROM invoiceproducts";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        if (c.getCount() == 0) {
+            c.close();
+            return 0;
+        } else {
+            c.moveToFirst();
+            int totalAmount = c.getInt(c.getColumnIndex("total_amount"));
+            c.close();
+            db.close();
+            return totalAmount;
+        }
+    }
 }

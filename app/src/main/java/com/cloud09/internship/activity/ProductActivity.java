@@ -161,7 +161,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         dialogBuilder.setCancelable(false);
 
         final TextView addProductName = dialogView.findViewById(R.id.tied_cuAdd_Product_name);
-        final TextView addProductRate = dialogView.findViewById(R.id.tied_cuAdd_Product_rate);
+        final TextView addProductRate = dialogView.findViewById(R.id.tied_cuAdd_discountAmount);
         final TextView addProductDescription = dialogView.findViewById(R.id.tied_cuAdd_Product_Description);
         final Spinner spinnerCategories = dialogView.findViewById(R.id.sp_cu_categoryincome);
 
