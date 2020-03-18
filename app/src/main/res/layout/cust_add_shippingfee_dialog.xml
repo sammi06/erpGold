@@ -13,7 +13,7 @@
         android:background="@color/colorbg"
         android:padding="5dp"
         android:paddingStart="10dp"
-        android:text="@string/discount"
+        android:text="@string/shipping_fee"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="8dp"
         android:padding="10dp"
-        android:text="@string/amount"
+        android:text="@string/fees"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_DiscountAmount_heading0" />
@@ -41,35 +41,12 @@
         android:hint="@string/o_oo"
         android:inputType="number"
         android:maxWidth="380dp"
+        android:maxLength="10"
         android:paddingStart="50dp"
         android:paddingEnd="5dp"
-        android:maxLength="10"
         android:textAlignment="viewEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_DiscountAmount_heading0" />
-
-    <TextView
-        android:id="@+id/tv_cu_UsePercentage_heading1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:padding="10dp"
-        android:text="@string/use_percentage"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cu_Amount_heading1" />
-
-
-    <CheckBox
-        android:id="@+id/checkbox_cuAdd_percentage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_discountAmount" />
 
     <TextView
         android:id="@+id/btn_cuD_cancel"
@@ -86,7 +63,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cu_UsePercentage_heading1" />
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_discountAmount" />
 
     <TextView
         android:id="@+id/btn_cuD_save"
@@ -101,6 +78,6 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cu_UsePercentage_heading1" />
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_discountAmount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

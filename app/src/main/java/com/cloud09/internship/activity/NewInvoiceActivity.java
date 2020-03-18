@@ -43,6 +43,7 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
     //------DialogBox-DiscountAmount----------------------------------------------------------------------
     private String givenDiscountAmount;
+    private CheckBox chkbx_cuAdd_percentag;
 
 
     //--------------------------
@@ -87,11 +88,11 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         }
         //------------------------------------------
         invoiceProductClassArrayList = productsSqlite.getAllInvoiceProducts();
-        SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
+        SubTotal = "" + productsSqlite.getInvoiceProductsAmount();
         GetData();
-        tvInvoiceProductsSubtotalPrice.setText(SubTotal);
-        tvTotalFee.setText(SubTotal);
-        tvBalanceDueAmount.setText(SubTotal);
+        tvInvoiceProductsSubtotalPrice.setText("Rps" + SubTotal);
+        tvTotalFee.setText("Rps" + SubTotal);
+        tvBalanceDueAmount.setText("Rps" + SubTotal);
 
 
         tvAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +161,7 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         productAmount = Double.parseDouble(productamount);
 
         ptaxrate = edt_producttaxrate.getText().toString();
-        if (!ptaxrate.isEmpty()){
+        if (!ptaxrate.isEmpty()) {
             taxRate = Double.parseDouble(ptaxrate);
         }
 
@@ -331,7 +332,17 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
 
     public void showShippingFeeDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(NewInvoiceActivity.this);
+        @SuppressLint("InflateParams") View dialogView = LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.cust_add_shippingfee_dialog, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
 
+        alertDialogAmount = dialogBuilder.create();
+
+
+
+        alertDialogAmount.show();
     }
 
     public void showDiscountAmountDialog() {
@@ -341,37 +352,66 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         dialogBuilder.setView(dialogView);
         dialogBuilder.setCancelable(false);
 
+        alertDialogAmount = dialogBuilder.create();
+
+
         final EditText edtAdd_discountAmount = dialogView.findViewById(R.id.tied_cuAdd_discountAmount);
-        CheckBox chkbx_cuAdd_percentag = dialogView.findViewWithTag(R.id.checkbox_cuAdd_percentage);
+        chkbx_cuAdd_percentag = dialogView.findViewById(R.id.checkbox_cuAdd_percentage);
 
         final TextView tv_Amount_heading = dialogView.findViewById(R.id.tv_cu_Amount_heading1);
         TextView tv_amount_ok_btn = dialogView.findViewById(R.id.btn_cuD_save);
         TextView tv_amount_cancel_btn = dialogView.findViewById(R.id.btn_cuD_cancel);
 
-        alertDialogAmount = dialogBuilder.create();
-
-
-//        chkbx_cuAdd_percentag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    tv_Amount_heading.setText("Percentage");
-//
-//
-//                }
-//            }
-//        });
-
+        chkbx_cuAdd_percentag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tv_Amount_heading.setText(R.string.percentage);
+                } else {
+                    tv_Amount_heading.setText(R.string.amount);
+                }
+            }
+        });
 
         tv_amount_ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                givenDiscountAmount = edtAdd_discountAmount.getText().toString();
+                if (chkbx_cuAdd_percentag.isChecked()) {
+                    givenDiscountAmount = edtAdd_discountAmount.getText().toString();
 
+                    int subtotal = Integer.parseInt(SubTotal);
+                    int givendiscountamount = Integer.parseInt(givenDiscountAmount);
 
+                    int calcPercentagevalue = (int) ((givendiscountamount / 100.0f) * subtotal);
+
+                            Log.i("cvv", "Checked :" +calcPercentagevalue +" :"+givendiscountamount+ ":"+subtotal);
+                    int value = subtotal - calcPercentagevalue;
+                            Log.i("cvv", String.valueOf(value));
+
+                    if (value != 0) {
+                        edtDiscountAmount.setText("- RPs" + calcPercentagevalue);
+                        tvTotalFee.setText("RPs" + value);
+                        tvBalanceDueAmount.setText("RPs" + value);
+                    }
+                } else {
+                    givenDiscountAmount = edtAdd_discountAmount.getText().toString();
+
+                    int subtotal = Integer.parseInt(SubTotal);
+                    int givendiscountamount = Integer.parseInt(givenDiscountAmount);
+
+                    Log.i("cvv", "Un-checked :" +subtotal +" : "+ givendiscountamount);
+                    int value = subtotal - givendiscountamount;
+
+                    if (value != 0) {
+                        edtDiscountAmount.setText("- RPs" + givendiscountamount);
+                        tvTotalFee.setText("RPs" + value);
+                        tvBalanceDueAmount.setText("RPs" + value);
+                    }
+                }
                 alertDialogAmount.dismiss();
             }
         });
+
         tv_amount_cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
