@@ -32,19 +32,24 @@ import com.cloud09.internship.activity.model.InvoiceProduct_Class;
 import java.util.ArrayList;
 
 public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-    String pname, pdescription;
-    String pqty;
-    String punitprice;
-    String productamount;
-    String ptaxrate;
+    private String pname, pdescription;
+    private String pqty;
+    private String punitprice;
+    private String productamount;
+    private String ptaxrate;
 
-    double taxRate, productAmount, unitPrice, value, qty;
-    int invoiceId;
+    private double taxRate, productAmount, unitPrice, value, qty;
+    private int invoiceId;
 
     //------DialogBox-DiscountAmount----------------------------------------------------------------------
     private String givenDiscountAmount;
     private CheckBox chkbx_cuAdd_percentag;
+    private int discValue = 0;
+    private int shipValue = 0;
 
+
+    //------------DialogBox-ShippingDee------------------------------------------------------------------
+    private String givenShippingFee, Tvtotalbalanceamount;
 
     //--------------------------
     private ArrayList<InvoiceProduct_Class> invoiceProductClassArrayList;
@@ -303,9 +308,9 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
                 SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
                 GetData();
                 alertDialog.dismiss();
-                tvInvoiceProductsSubtotalPrice.setText(SubTotal);
-                tvTotalFee.setText(SubTotal);
-                tvBalanceDueAmount.setText(SubTotal);
+                tvInvoiceProductsSubtotalPrice.setText("RPs" + SubTotal);
+                tvTotalFee.setText("RPs" + SubTotal);
+                tvBalanceDueAmount.setText("RPs" + SubTotal);
             }
         });
         tv_cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -322,9 +327,9 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
                 SubTotal = "RPs" + productsSqlite.getInvoiceProductsAmount();
                 GetData();
                 alertDialog.dismiss();
-                tvInvoiceProductsSubtotalPrice.setText(SubTotal);
-                tvTotalFee.setText(SubTotal);
-                tvBalanceDueAmount.setText(SubTotal);
+                tvInvoiceProductsSubtotalPrice.setText("RPs" + SubTotal);
+                tvTotalFee.setText("RPs" + SubTotal);
+                tvBalanceDueAmount.setText("RPs" + SubTotal);
             }
         });
         alertDialog.show();
@@ -337,12 +342,42 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
                 .inflate(R.layout.cust_add_shippingfee_dialog, null);
         dialogBuilder.setView(dialogView);
         dialogBuilder.setCancelable(false);
+        alertDialog = dialogBuilder.create();
 
-        alertDialogAmount = dialogBuilder.create();
+        final EditText tiet_ShippingFee = dialogView.findViewById(R.id.tied_cuAdd_ShippingFee);
 
+        TextView tv_shippingFee_ok_btn = dialogView.findViewById(R.id.btn_cuD_save);
+        TextView tv_shippingFee_cancel_btn = dialogView.findViewById(R.id.btn_cuD_cancel);
 
+        tv_shippingFee_ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                givenShippingFee = tiet_ShippingFee.getText().toString();
+                int shippingfee = Integer.parseInt(givenShippingFee);
 
-        alertDialogAmount.show();
+                if (discValue != 0) {
+                    int subtotal = discValue;
+                    shipValue = subtotal + shippingfee;
+                } else {
+                    int subtotal = Integer.parseInt(SubTotal);
+                    shipValue = subtotal + shippingfee;
+                }
+
+                if (shipValue != 0) {
+                    edtShippingFee.setText("+ RPs" + shippingfee);
+                    tvTotalFee.setText("RPs" + shipValue);
+                    tvBalanceDueAmount.setText("RPs" + shipValue);
+                }
+                alertDialog.dismiss();
+            }
+        });
+        tv_shippingFee_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     public void showDiscountAmountDialog() {
@@ -378,34 +413,41 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
             public void onClick(View v) {
                 if (chkbx_cuAdd_percentag.isChecked()) {
                     givenDiscountAmount = edtAdd_discountAmount.getText().toString();
-
-                    int subtotal = Integer.parseInt(SubTotal);
                     int givendiscountamount = Integer.parseInt(givenDiscountAmount);
+                    int calcPercentagevalue =0;
+                    if (shipValue != 0) {
+                        int subtotal = shipValue;
+                        calcPercentagevalue = (int) ((givendiscountamount / 100.0f) * subtotal);
+                        discValue = subtotal - calcPercentagevalue;
 
-                    int calcPercentagevalue = (int) ((givendiscountamount / 100.0f) * subtotal);
+                    } else {
+                        int subtotal = Integer.parseInt(SubTotal);
+                        calcPercentagevalue = (int) ((givendiscountamount / 100.0f) * subtotal);
+                        discValue = subtotal - calcPercentagevalue;
+                    }
 
-                            Log.i("cvv", "Checked :" +calcPercentagevalue +" :"+givendiscountamount+ ":"+subtotal);
-                    int value = subtotal - calcPercentagevalue;
-                            Log.i("cvv", String.valueOf(value));
-
-                    if (value != 0) {
+                    if (discValue != 0) {
                         edtDiscountAmount.setText("- RPs" + calcPercentagevalue);
-                        tvTotalFee.setText("RPs" + value);
-                        tvBalanceDueAmount.setText("RPs" + value);
+                        tvTotalFee.setText("RPs" + discValue);
+                        tvBalanceDueAmount.setText("RPs" + discValue);
                     }
                 } else {
                     givenDiscountAmount = edtAdd_discountAmount.getText().toString();
-
-                    int subtotal = Integer.parseInt(SubTotal);
                     int givendiscountamount = Integer.parseInt(givenDiscountAmount);
 
-                    Log.i("cvv", "Un-checked :" +subtotal +" : "+ givendiscountamount);
-                    int value = subtotal - givendiscountamount;
+                    if (shipValue != 0) {
+                        int subtotal = shipValue;
+                        discValue = subtotal - givendiscountamount;
 
-                    if (value != 0) {
+                    } else {
+                        int subtotal = Integer.parseInt(SubTotal);
+                        discValue = subtotal - givendiscountamount;
+                    }
+
+                    if (discValue != 0) {
                         edtDiscountAmount.setText("- RPs" + givendiscountamount);
-                        tvTotalFee.setText("RPs" + value);
-                        tvBalanceDueAmount.setText("RPs" + value);
+                        tvTotalFee.setText("RPs" + discValue);
+                        tvBalanceDueAmount.setText("RPs" + discValue);
                     }
                 }
                 alertDialogAmount.dismiss();
@@ -431,6 +473,12 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_saveInvoice) {
+            Intent cartActivity = new Intent(NewInvoiceActivity.this, InvoicesActivity.class);
+            startActivity(cartActivity);
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

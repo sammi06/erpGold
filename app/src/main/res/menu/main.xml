@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/action_restart"
-        android:orderInCategory="100"
+        android:id="@+id/action_saveInvoice"
         android:title="@string/save"
         app:showAsAction="always"
         tools:ignore="MenuTitle" />

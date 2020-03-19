@@ -7,7 +7,7 @@
 
     <!--cuSkills= create update objective-->
     <TextView
-        android:id="@+id/tv_cuAdd_DiscountAmount_heading0"
+        android:id="@+id/tv_cuAdd_ShippingFee_heading0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorbg"
@@ -21,7 +21,7 @@
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/tv_cu_Amount_heading1"
+        android:id="@+id/tv_cu_ShippingFee_heading1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -30,10 +30,10 @@
         android:text="@string/fees"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_DiscountAmount_heading0" />
+        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_ShippingFee_heading0" />
 
     <EditText
-        android:id="@+id/tied_cuAdd_discountAmount"
+        android:id="@+id/tied_cuAdd_ShippingFee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -46,7 +46,7 @@
         android:paddingEnd="5dp"
         android:textAlignment="viewEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_DiscountAmount_heading0" />
+        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_ShippingFee_heading0" />
 
     <TextView
         android:id="@+id/btn_cuD_cancel"
@@ -63,7 +63,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_discountAmount" />
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_ShippingFee" />
 
     <TextView
         android:id="@+id/btn_cuD_save"
@@ -78,6 +78,6 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_discountAmount" />
+        app:layout_constraintTop_toBottomOf="@id/tied_cuAdd_ShippingFee" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
