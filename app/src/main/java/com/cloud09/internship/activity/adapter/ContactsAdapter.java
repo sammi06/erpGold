@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
         holder.tvName.setText(Name);
 
+        holder.ivDeleteContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.ivEditContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -53,6 +67,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     public class ContactsHolder extends RecyclerView.ViewHolder {
         private TextView tvName, tvAddress, tvEmail, tvCountry, tvContact, tvRole, tvCity;
+        private ImageView ivEditContact, ivDeleteContact;
 
         public ContactsHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +79,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             tvContact = itemView.findViewById(R.id.tv_Contact_Country);
             tvCity = itemView.findViewById(R.id.tv_Contact_City);
             tvRole = itemView.findViewById(R.id.tv_Contact_Role);
+
+            ivEditContact = itemView.findViewById(R.id.iv_EditContacts);
+            ivDeleteContact = itemView.findViewById(R.id.iv_DeleteContacts);
         }
     }
 }

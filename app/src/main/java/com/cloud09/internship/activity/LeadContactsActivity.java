@@ -14,12 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloud09.internship.R;
+import com.cloud09.internship.activity.adapter.ContactsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class LeadContactsActivity extends AppCompatActivity {
     private RecyclerView rvDisplayLeadContacts;
     private FloatingActionButton fabAddLeadContacts;
     private AlertDialog alertDialog;
+    private ContactsAdapter contactsAdapter;
 
     //---------ADD--CONTACTS--Dialog-------------------
     private String FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
