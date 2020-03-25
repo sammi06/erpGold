@@ -197,7 +197,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:entries="@array/product_categories"
+                    android:entries="@array/Countries"
                     android:textColor="@color/colorblack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +234,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:entries="@array/product_categories"
+                    android:entries="@array/Countries"
                     android:textColor="@color/colorblack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -269,7 +269,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/et_Customer_Terms"
+                    android:id="@+id/edt_Customer_Terms"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
@@ -289,7 +289,7 @@
                     android:text="@string/date"
                     app:layout_constraintEnd_toStartOf="@+id/ImageViewMoney"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_Customer_Terms" />
+                    app:layout_constraintTop_toBottomOf="@id/edt_Customer_Terms" />
 
                 <TextView
                     android:id="@+id/tv_Due_Date"
@@ -298,7 +298,7 @@
                     android:layout_marginStart="10dp"
                     android:text="@string/due_date"
                     app:layout_constraintStart_toEndOf="@id/ImageViewMoney"
-                    app:layout_constraintTop_toBottomOf="@id/et_Customer_Terms" />
+                    app:layout_constraintTop_toBottomOf="@id/edt_Customer_Terms" />
 
                 <ImageView
                     android:id="@+id/ImageViewMoney"
@@ -310,7 +310,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_Customer_Terms" />
+                    app:layout_constraintTop_toBottomOf="@+id/edt_Customer_Terms" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -575,7 +575,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_Balance_Due">
 
                 <EditText
-                    android:id="@+id/note"
+                    android:id="@+id/edt_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -588,7 +588,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/not_visible"
+                    android:id="@+id/note_invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -600,7 +600,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/note" />
+                    app:layout_constraintTop_toBottomOf="@+id/edt_note" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

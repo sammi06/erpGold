@@ -1,0 +1,242 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite"
+    android:focusableInTouchMode="true"
+    android:padding="5dp">
+
+    <!--cuSkills= create update objective-->
+    <TextView
+        android:id="@+id/tv_cuAdd_leadContacts_heading0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorbg"
+        android:padding="5dp"
+        android:text="Contact Info"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_Firstname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="First Name"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cuAdd_leadContacts_heading0" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_Lastname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_Firstname" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_StreetAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Street Address"
+        android:importantForAutofill="no"
+        android:inputType="textPostalAddress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_Lastname" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_City"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:importantForAutofill="no"
+        android:inputType="textPostalAddress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_StreetAddress" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_ZipCode"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Zip Code"
+        android:importantForAutofill="no"
+        android:inputType="textPostalAddress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_StreetAddress" />
+
+    <Spinner
+        android:id="@+id/sp_cuAdd_Countries"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/Countries"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_City" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_State"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="State"
+        android:importantForAutofill="no"
+        android:inputType="textPostalAddress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_ZipCode" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_ContactTitle"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Contact Title"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sp_cuAdd_Countries" />
+
+    <Spinner
+        android:id="@+id/sp_cuAdd_ContactRole"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/ContactRoles"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_State" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_PrimaryContact"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Primary Contact"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_ContactTitle" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_SecondaryPhone"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Secondary Contact"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_ContactTitle" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_PrimaryMobile"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Primary Mobile"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_PrimaryContact" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_SecondaryMobile"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Secondary Mobile"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_SecondaryPhone" />
+
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_PrimaryEmail"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Primary Email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_PrimaryMobile" />
+
+    <EditText
+        android:id="@+id/tiedt_cuAdd_SecondaryEmail"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:hint="Secondary Email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:maxLength="15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiedt_cuAdd_SecondaryMobile" />
+
+
+
+    <View
+        android:id="@+id/viewleads0"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@id/btn_cuD_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tiedt_cuAdd_PrimaryEmail"/>
+
+    <TextView
+        android:id="@+id/btn_cuD_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/colorwhite"
+        android:padding="15dp"
+        android:text="@string/cancle"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewleads0" />
+
+    <TextView
+        android:id="@+id/btn_cuD_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/colorwhite"
+        android:padding="15dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewleads0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

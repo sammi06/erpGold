@@ -9,9 +9,21 @@
     </style>
 
 
-    <array name="product_categories">
+    <array name="cities">
         <item>Select Your City</item>
         <item>Multan</item>
         <item>Sahiwal</item>
+    </array>
+
+    <array name="Countries">
+        <item>Select Country</item>
+        <item>Pakistan</item>
+        <item>USA</item>
+    </array>
+
+    <array name="ContactRoles">
+        <item>Select Role</item>
+        <item>Administrator</item>
+        <item>HR</item>
     </array>
 </resources>

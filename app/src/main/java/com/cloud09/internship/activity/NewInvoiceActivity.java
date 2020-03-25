@@ -64,7 +64,7 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
 
 
     //-----InvoiceScreen---------------------------------------------------------------------
-    private EditText edtCustomerName, edtCustomerInvoiceNumber, edtCustomerTerms;
+    private EditText edtCustomerName, edtCustomerInvoiceNumber, edtCustomerTerms, edtCustomerNote, edtYourNote;
     private TextView tvInvoiceProductsSubtotalPrice, edtDiscountAmount, edtShippingFee, tvTotalFee, tvBalanceDueAmount;
     private String SubTotal;
 
@@ -78,6 +78,12 @@ public class NewInvoiceActivity extends AppCompatActivity implements SwipeRefres
         tvInvoiceProductsSubtotalPrice = findViewById(R.id.tv_Invoice_Products_Subtotal_Price);
         edtDiscountAmount = findViewById(R.id.edt_Discount_Amount);
         edtShippingFee = findViewById(R.id.edt_Shipping_Fee);
+        edtCustomerName = findViewById(R.id.edt_Customer_Name);
+        edtCustomerInvoiceNumber = findViewById(R.id.edt_Customer_Invoice);
+        edtCustomerTerms = findViewById(R.id.edt_Customer_Terms);
+        edtCustomerNote = findViewById(R.id.edt_note);
+        edtYourNote = findViewById(R.id.note_invisible);
+
         tvTotalFee = findViewById(R.id.tv_Total_Fee);
         tvBalanceDueAmount = findViewById(R.id.tv_Blanace_Due_Amount);
 

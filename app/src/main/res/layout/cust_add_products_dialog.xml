@@ -128,7 +128,7 @@
         android:layout_marginEnd="12dp"
         android:textAlignment="viewStart"
         android:gravity="start"
-        android:entries="@array/product_categories"
+        android:entries="@array/Countries"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
         app:layout_constraintEnd_toEndOf="parent"
