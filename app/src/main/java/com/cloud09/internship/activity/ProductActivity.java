@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-    ArrayList<Product> product_model_class;
     ArrayList<Product> productsList;
     ProductAdapter adapter;
     private FloatingActionButton fabAddProducts;
@@ -85,7 +84,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 Log.i("cvv", String.valueOf(response));
                 try {
                     JSONArray jObjectArray = response;
-                    //Category Code for displaying
                     productsList = new ArrayList<>();
                     for (int i = 0; i < jObjectArray.length(); i++) {
                         JSONObject productObject = jObjectArray.getJSONObject(i);

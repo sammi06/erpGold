@@ -1,8 +1,8 @@
 package com.cloud09.internship.activity.model;
 
 public class DisplayContacts {
-    int ContactId;
-    String FirstName;
+    public int ContactId;
+    public String FirstName;
     String LastName;
     String Role;
     String Address;

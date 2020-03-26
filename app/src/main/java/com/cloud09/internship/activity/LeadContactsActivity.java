@@ -2,30 +2,50 @@ package com.cloud09.internship.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.location.Address;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.cloud09.internship.R;
 import com.cloud09.internship.activity.adapter.ContactsAdapter;
+import com.cloud09.internship.activity.model.DisplayContacts;
+import com.cloud09.internship.activity.serverApi.ApiConfiguration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LeadContactsActivity extends AppCompatActivity {
     private RecyclerView rvDisplayLeadContacts;
     private FloatingActionButton fabAddLeadContacts;
     private AlertDialog alertDialog;
     private ContactsAdapter contactsAdapter;
+    //----------Get--Contacts------------------------
+    String contactsurl;
 
     //---------ADD--CONTACTS--Dialog-------------------
     private String FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
-
+    int lead = 17409;
+    private ArrayList<DisplayContacts> contactsArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +64,6 @@ public class LeadContactsActivity extends AppCompatActivity {
         getContactsData();
     }
 
-    private void getContactsData() {
-
-    }
-
     public void showAddLeadContactsDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LeadContactsActivity.this);
 
@@ -63,10 +79,10 @@ public class LeadContactsActivity extends AppCompatActivity {
         final EditText edtStreetAddress = dialogView.findViewById(R.id.tiedt_cuAdd_StreetAddress);
         final EditText edtCity = dialogView.findViewById(R.id.tiedt_cuAdd_City);
         final EditText edtCityZipCode = dialogView.findViewById(R.id.tiedt_cuAdd_ZipCode);
-            final Spinner spCountries = dialogView.findViewById(R.id.sp_cuAdd_Countries);
+        final Spinner spCountries = dialogView.findViewById(R.id.sp_cuAdd_Countries);
         final EditText edtState = dialogView.findViewById(R.id.tiedt_cuAdd_State);
         final EditText edtContactTitle = dialogView.findViewById(R.id.tiedt_cuAdd_ContactTitle);
-            final Spinner spContactRole = dialogView.findViewById(R.id.sp_cuAdd_ContactRole);
+        final Spinner spContactRole = dialogView.findViewById(R.id.sp_cuAdd_ContactRole);
         final EditText edtPContact = dialogView.findViewById(R.id.tiedt_cuAdd_PrimaryContact);
         final EditText edtSContact = dialogView.findViewById(R.id.tiedt_cuAdd_SecondaryPhone);
         final EditText edtPMobile = dialogView.findViewById(R.id.tiedt_cuAdd_PrimaryMobile);
@@ -94,7 +110,7 @@ public class LeadContactsActivity extends AppCompatActivity {
                 PEmail = edtPEmail.getText().toString();
                 SEmail = edtSEmail.getText().toString();
 
-
+                saveContactsData();
                 alertDialog.dismiss();
             }
         });
@@ -105,6 +121,85 @@ public class LeadContactsActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+
+
+    private void getContactsData() {
+        contactsurl = ApiConfiguration.GetContacts_URL + "?LeadID=" + lead;
+
+        JsonArrayRequest getContactsRequest = new JsonArrayRequest(contactsurl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("cvv", String.valueOf(response));
+                try {
+                    JSONArray jObjectArray = response;
+                    contactsArrayList = new ArrayList<>();
+                    for (int c = 0; c < jObjectArray.length(); c++) {
+                        JSONObject contactsObject = jObjectArray.getJSONObject(c);
+
+                        DisplayContacts contacts = new DisplayContacts();
+                        contacts.ContactId = contactsObject.getInt("");
+                        contacts.FirstName = contactsObject.getString("");
+
+
+
+
+                        contactsArrayList.add(contacts);
+                    }
+                    //RecyclerView
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeadContactsActivity.this, LinearLayoutManager.VERTICAL, false);
+                    rvDisplayLeadContacts.setLayoutManager(linearLayoutManager);
+                    //Adapter
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("cvv", String.valueOf(e));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("cvv", String.valueOf(error));
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", "8c50bf69-e974-4384-9850-215782ff2ad1");
+                headers.put("Username", "abdeveloper00@gmail.com");
+
+                return headers;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        getContactsRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(getContactsRequest);
+    }
+
+    private void saveContactsData() {
+        JsonArrayRequest saveContactRequest = new JsonArrayRequest(ApiConfiguration.GetContacts_URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", "8c50bf69-e974-4384-9850-215782ff2ad1");
+                headers.put("Username", "abdeveloper00@gmail.com");
+                return headers;
+            }
+        };
     }
 
 }
