@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,8 +45,9 @@ public class LeadContactsActivity extends AppCompatActivity {
 
     //---------ADD--CONTACTS--Dialog-------------------
     private String FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
-    int lead = 17409;
+    int lead = 17833;
     private ArrayList<DisplayContacts> contactsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,6 @@ public class LeadContactsActivity extends AppCompatActivity {
                 PEmail = edtPEmail.getText().toString();
                 SEmail = edtSEmail.getText().toString();
 
-                saveContactsData();
                 alertDialog.dismiss();
             }
         });
@@ -123,34 +124,36 @@ public class LeadContactsActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-
-
     private void getContactsData() {
         contactsurl = ApiConfiguration.GetContacts_URL + "?LeadID=" + lead;
-
+        Log.i("cvv", contactsurl);
         JsonArrayRequest getContactsRequest = new JsonArrayRequest(contactsurl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.i("cvv", String.valueOf(response));
                 try {
-                    JSONArray jObjectArray = response;
                     contactsArrayList = new ArrayList<>();
-                    for (int c = 0; c < jObjectArray.length(); c++) {
-                        JSONObject contactsObject = jObjectArray.getJSONObject(c);
+                    for (int c = 0; c < response.length(); c++) {
+                        JSONObject contactsObject = response.getJSONObject(c);
 
                         DisplayContacts contacts = new DisplayContacts();
-                        contacts.ContactId = contactsObject.getInt("");
-                        contacts.FirstName = contactsObject.getString("");
-
-
-
+                        contacts.ContactId = contactsObject.getInt("ID");
+                        contacts.LeadID = contactsObject.getInt("LeadID");
 
                         contactsArrayList.add(contacts);
+                        Log.i("cvv", String.valueOf(contactsArrayList));
                     }
                     //RecyclerView
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeadContactsActivity.this, LinearLayoutManager.VERTICAL, false);
                     rvDisplayLeadContacts.setLayoutManager(linearLayoutManager);
+
                     //Adapter
+                    contactsAdapter = new ContactsAdapter(LeadContactsActivity.this, contactsArrayList, new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                    rvDisplayLeadContacts.setAdapter(contactsAdapter);
 
                 } catch (Exception e) {
                     e.printStackTrace();

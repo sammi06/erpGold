@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsHolder> {
     private Context context;
     private ArrayList<DisplayContacts> dataSet;
-    private AdapterView.OnClickListener onClickListener;
+    AdapterView.OnClickListener onClickListener;
 
     public ContactsAdapter(Context context, ArrayList<DisplayContacts> dataSet, AdapterView.OnClickListener onClickListener) {
         this.context = context;
@@ -31,7 +31,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     @Override
     public ContactsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_products_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_contact_items, parent, false);
         return new ContactsHolder(view);
     }
 
@@ -43,7 +43,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
         String Name = fname + " " + lname;
 
-        holder.tvName.setText(Name);
+        holder.tvName.setText(""+contacts.getContactId());
+        holder.tvAddress.setText(""+contacts.getLeadID());
 
         holder.ivDeleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
