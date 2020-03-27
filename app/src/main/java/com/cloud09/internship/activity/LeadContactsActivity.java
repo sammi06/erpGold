@@ -184,25 +184,44 @@ public class LeadContactsActivity extends AppCompatActivity {
     }
 
     private void saveContactsData() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest saveContactRequest = new JsonArrayRequest(ApiConfiguration.GetContacts_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                try {
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("cvv", String.valueOf(e));
+                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.i("cvv", String.valueOf(error));
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Token", "8c50bf69-e974-4384-9850-215782ff2ad1");
                 headers.put("Username", "abdeveloper00@gmail.com");
                 return headers;
             }
         };
+        saveContactRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(saveContactRequest);
     }
 
 }
