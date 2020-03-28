@@ -5,6 +5,9 @@ public class ApiConfiguration {
     public static final String BASE_URL = "http://test.erp.gold/api/";
 
     public static final String PRODUCTS_URL = BASE_URL + "advanceinventory/items/GetList";
+
     public static final String GetContacts_URL = BASE_URL + "CRM/leadcontact/GetleadContactList";
     public static final String PostContacts_URL = BASE_URL + "CRM/leadcontact/Post";
+    public static final String UpdateContacts_URL = BASE_URL + "CRM/leadcontact/Put";
+    public static final String DeleteContacts_URL = BASE_URL + "CRM/leadcontact/delete";
 }
