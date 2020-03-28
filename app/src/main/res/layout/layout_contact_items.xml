@@ -4,12 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_Contact_LeadId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_Contact_Name"
@@ -17,7 +26,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_Contact_LeadId" />
 
         <TextView
             android:id="@+id/tv_Contact_Email"
@@ -62,10 +71,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Contact_Country">
+            app:layout_constraintTop_toBottomOf="@+id/tv_Contact_City">
 
             <View
                 android:id="@+id/view0"
@@ -79,9 +87,9 @@
                 android:id="@+id/iv_EditContacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_edit"
+                android:padding="15dp"
                 app:layout_constraintEnd_toStartOf="@+id/iv_DeleteContacts"
                 app:layout_constraintTop_toBottomOf="@+id/view0"
                 tools:ignore="ContentDescription"/>
@@ -92,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:padding="15dp"
                 android:src="@drawable/ic_delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view0"

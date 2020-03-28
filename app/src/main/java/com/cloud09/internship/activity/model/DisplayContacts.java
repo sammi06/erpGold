@@ -4,16 +4,24 @@ public class DisplayContacts {
     public int ContactId;
     public int LeadID;
     public String FirstName;
-    String LastName;
-    String Role;
-    String Address;
-    String City;
-    String PostalCode;
-    String State;
-    String Country;
-    String Email;
-    String Phone;
+    public String LastName;
+    public String Role;
+    public String Address;
+    public String City;
+    public String PostalCode;
+    public String State;
+    public String Country;
+    public String Email;
+    public String Phone;
+    public String ContactTitle;
 
+    public String getContactTitle() {
+        return ContactTitle;
+    }
+
+    public void setContactTitle(String contactTitle) {
+        ContactTitle = contactTitle;
+    }
 
     public int getContactId() {
         return ContactId;
@@ -111,22 +119,4 @@ public class DisplayContacts {
         Phone = phone;
     }
 
-
-    @Override
-    public String toString() {
-        return "DisplayContacts{" + "\n" +
-                "ContactId=" + ContactId + "\n" +
-                ", LeadID=" + LeadID + "\n" +
-                ", FirstName='" + FirstName + '\'' + "\n" +
-                ", LastName='" + LastName + '\'' + "\n" +
-                ", Role='" + Role + '\'' + "\n" +
-                ", Address='" + Address + '\'' + "\n" +
-                ", City='" + City + '\'' + "\n" +
-                ", PostalCode='" + PostalCode + '\'' +
-                ", State='" + State + '\'' +
-                ", Country='" + Country + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Phone='" + Phone + '\'' +
-                '}';
-    }
 }

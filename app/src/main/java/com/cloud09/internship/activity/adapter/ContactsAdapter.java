@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsHolder> {
     private Context context;
     private ArrayList<DisplayContacts> dataSet;
-    AdapterView.OnClickListener onClickListener;
+    AdapterView.OnItemClickListener onItemClickListener;
 
-    public ContactsAdapter(Context context, ArrayList<DisplayContacts> dataSet, AdapterView.OnClickListener onClickListener) {
+    public ContactsAdapter(Context context, ArrayList<DisplayContacts> dataSet, AdapterView.OnItemClickListener onItemClickListener) {
         this.context = context;
         this.dataSet = dataSet;
-        this.onClickListener = onClickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -36,27 +37,36 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactsHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ContactsHolder holder, final int position) {
         DisplayContacts contacts = dataSet.get(position);
         String fname = contacts.getFirstName();
         String lname = contacts.getLastName();
-
         String Name = fname + " " + lname;
+        holder.tvName.setText(Name);
+        holder.tvLeadId.setText("" + contacts.getLeadID());
 
-        holder.tvName.setText(""+contacts.getContactId());
-        holder.tvAddress.setText(""+contacts.getLeadID());
+        holder.tvContact.setText(contacts.getPhone());
+        holder.tvEmail.setText(contacts.getEmail());
+        holder.tvAddress.setText(contacts.getAddress());
+        holder.tvCountry.setText(contacts.getCountry());
+        String city = contacts.getCity();
+        String postalcode = contacts.getPostalCode();
+        holder.tvRole.setText(contacts.getRole());
+
+        String City = city + "  "+ postalcode;
+        holder.tvCity.setText(City);
 
         holder.ivDeleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(context, "Delete Button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.ivEditContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onItemClickListener.onItemClick(null, holder.ivEditContact, holder.getAdapterPosition(), 0);
             }
         });
     }
@@ -66,12 +76,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         return dataSet.size();
     }
 
-    public class ContactsHolder extends RecyclerView.ViewHolder {
-        private TextView tvName, tvAddress, tvEmail, tvCountry, tvContact, tvRole, tvCity;
+    class ContactsHolder extends RecyclerView.ViewHolder {
+        private TextView tvLeadId, tvName, tvAddress, tvEmail, tvCountry, tvContact, tvRole, tvCity;
         private ImageView ivEditContact, ivDeleteContact;
 
-        public ContactsHolder(@NonNull View itemView) {
+        ContactsHolder(@NonNull View itemView) {
             super(itemView);
+            tvLeadId = itemView.findViewById(R.id.tv_Contact_LeadId);
             tvName = itemView.findViewById(R.id.tv_Contact_Name);
             tvAddress = itemView.findViewById(R.id.tv_Contact_Address);
             tvEmail = itemView.findViewById(R.id.tv_Contact_Email);

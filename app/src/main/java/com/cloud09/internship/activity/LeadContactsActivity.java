@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,13 +15,16 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cloud09.internship.R;
 import com.cloud09.internship.activity.adapter.ContactsAdapter;
@@ -44,8 +48,8 @@ public class LeadContactsActivity extends AppCompatActivity {
     String contactsurl;
 
     //---------ADD--CONTACTS--Dialog-------------------
-    private String FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
-    int lead = 17833;
+    String FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
+    String lead = "17833";
     private ArrayList<DisplayContacts> contactsArrayList;
 
     @Override
@@ -112,6 +116,8 @@ public class LeadContactsActivity extends AppCompatActivity {
                 PEmail = edtPEmail.getText().toString();
                 SEmail = edtSEmail.getText().toString();
 
+                saveContactsData(lead, FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail);
+                getContactsData();
                 alertDialog.dismiss();
             }
         });
@@ -130,6 +136,7 @@ public class LeadContactsActivity extends AppCompatActivity {
         JsonArrayRequest getContactsRequest = new JsonArrayRequest(contactsurl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                Log.i("cvv", String.valueOf(response));
                 try {
                     contactsArrayList = new ArrayList<>();
                     for (int c = 0; c < response.length(); c++) {
@@ -139,18 +146,29 @@ public class LeadContactsActivity extends AppCompatActivity {
                         contacts.ContactId = contactsObject.getInt("ID");
                         contacts.LeadID = contactsObject.getInt("LeadID");
 
+                        contacts.FirstName = contactsObject.getString("Contact_FirstName");
+                        contacts.LastName = contactsObject.getString("Contact_LastName");
+                        contacts.Address= contactsObject.getString("StreetAddress1");
+                        contacts.City= contactsObject.getString("City");
+                        contacts.Email= contactsObject.getString("Contact_Email");
+                        contacts.Country= contactsObject.getString("CountryName");
+                        contacts.PostalCode= contactsObject.getString("ZipCode");
+                        contacts.Role= contactsObject.getString("Contact_Role");
+                        contacts.ContactTitle = contactsObject.getString("Contact_Title");
+                        contacts.Phone = contactsObject.getString("Contact_Phone");
+
                         contactsArrayList.add(contacts);
-                        Log.i("cvv", String.valueOf(contactsArrayList));
+                        //Log.i("cvv", String.valueOf(contactsArrayList));
                     }
                     //RecyclerView
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LeadContactsActivity.this, LinearLayoutManager.VERTICAL, false);
                     rvDisplayLeadContacts.setLayoutManager(linearLayoutManager);
 
                     //Adapter
-                    contactsAdapter = new ContactsAdapter(LeadContactsActivity.this, contactsArrayList, new AdapterView.OnClickListener() {
+                    contactsAdapter = new ContactsAdapter(LeadContactsActivity.this, contactsArrayList, new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onClick(View v) {
-
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            updateContact();
                         }
                     });
                     rvDisplayLeadContacts.setAdapter(contactsAdapter);
@@ -183,31 +201,87 @@ public class LeadContactsActivity extends AppCompatActivity {
         queue.add(getContactsRequest);
     }
 
-    private void saveContactsData() {
+    private void updateContact() {
+        Toast.makeText(this, "Update Method Called", Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveContactsData(final String LeadId, final String FirstName, final String LastName, final String City,
+                                  final String Country, final String StreetAddress, final String ZipCode,
+                                  final String State, final String ContactTitle, final String ContactRole,
+                                  final String PContact, final String SContact, final String PMobile,
+                                  final String SMobile, final String PEmail, final String SEmail) {
+        final ProgressDialog pdialog = new ProgressDialog(LeadContactsActivity.this);
+        pdialog.setCancelable(false);
+        pdialog.setMessage("Order In Process");
+        pdialog.show();
+
+        contactsurl = ApiConfiguration.PostContacts_URL + "?LeadID=" + lead;
+        Log.i("cvv", contactsurl);
+
+            HashMap<String, String> params = new HashMap<String, String>();
+            //FirstName, LastName, City, Country, StreetAddress, ZipCode, State, ContactTitle, ContactRole, PContact, SContact, PMobile, SMobile, PEmail, SEmail;
+            try {
+                params.put("LeadID", LeadId);
+
+                params.put("Contact_FirstName", FirstName);
+                params.put("Contact_LastName", LastName);
+                params.put("City", City);
+                params.put("CountryName", Country);
+                params.put("StreetAddress1", StreetAddress);
+                params.put("ZipCode", ZipCode);
+                params.put("StateID", State);
+                params.put("Contact_Title", ContactTitle);
+                params.put("Contact_Role", ContactRole);
+                params.put("Contact_Phone", PContact);
+                params.put("Contact_Phone2", SContact);
+                params.put("Contact_Mobile", PMobile);
+                params.put("Contact_Mobile2", SMobile);
+                params.put("Contact_Email", PEmail);
+                params.put("Contact_Email2", SEmail);
+            } catch (Exception e) {
+                Log.i("cvv", "ParamsException" + String.valueOf(e));
+            }
+
+
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest saveContactRequest = new JsonArrayRequest(ApiConfiguration.GetContacts_URL, new Response.Listener<JSONArray>() {
+        JsonObjectRequest saveContactRequest = new JsonObjectRequest(contactsurl, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
+                pdialog.dismiss();
                 try {
+//                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
+//                    JSONArray jsonArray = new JSONArray(response);
+//                    Log.i("cvv", "JsonObject : "+String.valueOf(jsonObject));
+//                    Log.i("cvv", "JsonArray : "+String.valueOf(jsonArray));
+//
+//                    int status = jsonObject.getInt("status");
+//                    String message = jsonObject.getString("Message");
+//                    Log.i("cvv", "Message is :" + message);
+
+//
+//                    if (status == 0) {
+//                        Toast.makeText(LeadContactsActivity.this, message, Toast.LENGTH_LONG).show();
+//                        Log.i("cvv", "Message is :" + message);
+//                    } else {
+//                        Log.i("cvv", "Message is :" + message);
+//                        Toast.makeText(LeadContactsActivity.this, message, Toast.LENGTH_LONG).show();
+//                    }
+
 
                 } catch (Exception e) {
+                    pdialog.dismiss();
                     e.printStackTrace();
-                    Log.i("cvv", String.valueOf(e));
+                    Log.i("cvv", "Exception :" + String.valueOf(e));
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("cvv", String.valueOf(error));
+                pdialog.dismiss();
+                Log.i("cvv", "Error : "+String.valueOf(error));
             }
         }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
 
-                return params;
-            }
 
             @Override
             public Map<String, String> getHeaders() {

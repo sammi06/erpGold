@@ -6,4 +6,5 @@ public class ApiConfiguration {
 
     public static final String PRODUCTS_URL = BASE_URL + "advanceinventory/items/GetList";
     public static final String GetContacts_URL = BASE_URL + "CRM/leadcontact/GetleadContactList";
+    public static final String PostContacts_URL = BASE_URL + "CRM/leadcontact/Post";
 }
